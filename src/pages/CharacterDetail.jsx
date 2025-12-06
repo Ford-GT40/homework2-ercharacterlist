@@ -1,19 +1,35 @@
 import { useParams, Link } from 'react-router-dom'
+import { useQuery } from '@tanstack/react-query'
+import { getCharacterDetail } from '../api/characterApi.js'
 
 // TODO: 테스트 Only, 변경 요구
-const character = {
-    "id": "6932de411bf7e8b216de27de",
-    "name": "Blair",
-    "code": "40F-RFT87",
-    "roles": ["Fighter", "Assassin"],
-    "weapons": ["Dual Swords", "Double Bladed Sword"],
-    "background": "VF 각성자들에 대한 증오심에 이끌려 복수를 추구하는 젊은 여성으로, 서서히 자신이 쫓는 괴물로 변해가는 중이다.",
-    "tips": "VF 각성자에 대한 깊은 증오심에 힘입어, 블레어는 XMS-5를 사용하여 신체 능력을 강화하고 그들을 감지하는 힘을 얻습니다. 그녀는 근접 전투에서 능력을 능숙하게 연계하여 상대를 압도합니다."
-}
+// const character = {
+//     "id": "6932de411bf7e8b216de27de",
+//     "name": "Blair",
+//     "code": "40F-RFT87",
+//     "roles": ["Fighter", "Assassin"],
+//     "weapons": ["Dual Swords", "Double Bladed Sword"],
+//     "background": "VF 각성자들에 대한 증오심에 이끌려 복수를 추구하는 젊은 여성으로, 서서히 자신이 쫓는 괴물로 변해가는 중이다.",
+//     "tips": "VF 각성자에 대한 깊은 증오심에 힘입어, 블레어는 XMS-5를 사용하여 신체 능력을 강화하고 그들을 감지하는 힘을 얻습니다. 그녀는 근접 전투에서 능력을 능숙하게 연계하여 상대를 압도합니다."
+// }
 
 const CharacterDetail = () => {
   // id를 destructuring으로 받음
   const { id } = useParams()
+
+  const { data: character, isLoading, isError, error } = useQuery({
+    queryKey: ['character', id],
+    queryFn: () => getCharacterDetail(id),
+    enabled: !!id,
+  })
+
+  if (isLoading) {
+    return <p className="text-center mt-10">Loading...</p>
+  }
+
+  if (isError) {
+    return <p className="text-center mt-10">오류 발생: {error.message}</p>
+  }
 
   return (
     <div className="min-h-screen bg-gray-900 p-6 flex justify-center">

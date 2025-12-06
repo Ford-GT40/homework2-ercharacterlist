@@ -16,6 +16,5 @@ export default function CharacterList({ characters }) {
         ))}
       </div>
     </body>
-    
   )
 }
