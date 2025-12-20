@@ -9,7 +9,7 @@ export default function CharacterCard({ character }) {
       {/* flex-shrink-0: 이미지 축소 방지 */}
       <div className="flex-shrink-0 mr-4">
         <img 
-          src={`https://picsum.photos/100/100?random=${character.id}`} 
+          src={`${character.url}`} 
           alt={`${character.name} 이미지`}
           className="w-16 h-16 object-cover rounded-lg shadow-md"
         />
